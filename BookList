@@ -1,0 +1,169 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace BookDataGrid
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.ShowDialog();
+
+            txtFilePath.Text = openFileDialog1.FileName;
+            BindDataCSV(txtFilePath.Text);
+
+            dgvBooks.Columns["Title"].DisplayIndex = 0;
+            dgvBooks.Columns["Author"].DisplayIndex = 1;
+            dgvBooks.Columns["Year"].DisplayIndex = 2;
+            dgvBooks.Columns["Price"].DisplayIndex = 3;
+            dgvBooks.Columns["In Stock"].DisplayIndex = 4;
+            dgvBooks.Columns["BindingNew"].DisplayIndex = 5;
+            dgvBooks.Columns["DescriptionBtn"].DisplayIndex = 6;
+            dgvBooks.Columns["Binding"].Visible = false;
+            dgvBooks.Columns["Description"].Visible = false;
+        }
+
+        private void BindDataCSV(string filePath)
+        {
+            DataTable dt = new DataTable();
+
+            string[] lines = System.IO.File.ReadAllLines(filePath);
+
+
+            if (lines.Length > 0)
+            {
+                //first line to create header
+
+                string firstLine = lines[0];
+                string[] headerLabels = firstLine.Split(';');
+
+
+                //Creates Column Header and sets datatypes
+                foreach (string headerWord in headerLabels)
+                {
+                    if (headerWord == "In Stock")
+                    {
+                        dt.Columns.Add(new DataColumn("In Stock", typeof(bool)));
+                    }
+                  
+                   else
+                    {
+                        dt.Columns.Add(new DataColumn(headerWord));
+                    }
+
+                }
+
+                //for data from csv file
+                for (int r = 1; r < lines.Length; r++)
+                {
+                    string[] dataWords = lines[r].Split(';');
+                    DataRow dr = dt.NewRow();
+                    int columnIndex = 0;
+                    foreach (string headerWord in headerLabels)
+                    {
+                        if (headerWord == "In Stock")
+                        {
+                            if (dataWords[columnIndex] == "yes")
+                            {
+                                dataWords[columnIndex] = "true";
+                            }
+                            else
+                            {
+                                dataWords[columnIndex] = "false";
+                            }
+
+                        }
+                        else if (headerWord == "Binding")
+                        {
+
+                            BindingNew.Items.Add(dataWords[columnIndex]);
+                            BindingNew.Selected = true;
+                            //break;
+                        }
+                        else if (headerWord == "Description")
+                        {
+                           this.dgvBooks.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(dgvBooks_CellClick);
+                        }
+
+                        dr[headerWord] = dataWords[columnIndex++];
+
+                    }
+                    DescriptionBtn.Text = "Read More..!";
+                    dt.Rows.Add(dr);
+                }
+            }
+
+            if (dt.Rows.Count > 0)
+            {
+
+                dgvBooks.DataSource = dt;
+            }
+
+
+        }
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvBooks_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            
+            foreach (DataGridViewRow row in dgvBooks.Rows)
+            {
+                int Instock = Convert.ToInt32(row.Cells[6].Value);
+                if (Instock == 1)
+                {
+                    row.DefaultCellStyle.BackColor = Color.White;
+                    row.DefaultCellStyle.ForeColor = Color.Black;
+
+                }
+                else
+                {
+                    row.DefaultCellStyle.BackColor = Color.Red;
+                    row.DefaultCellStyle.ForeColor = Color.White;
+                }
+
+            }
+        }
+
+        private void Delete_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow items in dgvBooks.Rows)
+            {
+                if (!bool.Parse(Convert.ToString(items.Cells[6].Value)))
+                {
+                    dgvBooks.Rows.RemoveAt(items.Cells[6].RowIndex);
+                }
+            }
+        }
+
+        private void dgvBooks_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvBooks.Columns[e.ColumnIndex].Name == "DescriptionBtn")
+            {
+                MessageBox.Show(dgvBooks.Rows[e.RowIndex].Cells[8].Value.ToString());
+
+            }
+        }
+
+      
+    }
+}
+
