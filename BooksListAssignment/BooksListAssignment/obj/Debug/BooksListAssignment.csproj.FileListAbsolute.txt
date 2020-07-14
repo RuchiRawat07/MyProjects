@@ -1,0 +1,10 @@
+C:\Users\Ruchi Rawat\source\repos\BooksListAssignment\BooksListAssignment\bin\Debug\BooksListAssignment.exe.config
+C:\Users\Ruchi Rawat\source\repos\BooksListAssignment\BooksListAssignment\bin\Debug\BooksListAssignment.exe
+C:\Users\Ruchi Rawat\source\repos\BooksListAssignment\BooksListAssignment\bin\Debug\BooksListAssignment.pdb
+C:\Users\Ruchi Rawat\source\repos\BooksListAssignment\BooksListAssignment\obj\Debug\BooksListAssignment.csprojAssemblyReference.cache
+C:\Users\Ruchi Rawat\source\repos\BooksListAssignment\BooksListAssignment\obj\Debug\BooksListAssignment.Form1.resources
+C:\Users\Ruchi Rawat\source\repos\BooksListAssignment\BooksListAssignment\obj\Debug\BooksListAssignment.Properties.Resources.resources
+C:\Users\Ruchi Rawat\source\repos\BooksListAssignment\BooksListAssignment\obj\Debug\BooksListAssignment.csproj.GenerateResource.cache
+C:\Users\Ruchi Rawat\source\repos\BooksListAssignment\BooksListAssignment\obj\Debug\BooksListAssignment.csproj.CoreCompileInputs.cache
+C:\Users\Ruchi Rawat\source\repos\BooksListAssignment\BooksListAssignment\obj\Debug\BooksListAssignment.exe
+C:\Users\Ruchi Rawat\source\repos\BooksListAssignment\BooksListAssignment\obj\Debug\BooksListAssignment.pdb
