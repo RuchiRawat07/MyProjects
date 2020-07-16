@@ -37,6 +37,9 @@ namespace BookDataGrid
             dgvBooks.Columns["DescriptionBtn"].DisplayIndex = 6;
             dgvBooks.Columns["Binding"].Visible = false;
             dgvBooks.Columns["Description"].Visible = false;
+            
+            this.dgvBooks.Sort(this.dgvBooks.Columns["Price"], ListSortDirection.Descending);
+
         }
 
         private void BindDataCSV(string filePath)
